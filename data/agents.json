@@ -1,0 +1,63 @@
+[
+  {
+    "id": "agent-001",
+    "name": "Alice Thompson",
+    "skills": [
+      "billing",
+      "general"
+    ],
+    "status": "busy",
+    "activeCalls": 3,
+    "maxCapacity": 3,
+    "createdAt": "2024-01-15T08:00:00.000Z"
+  },
+  {
+    "id": "agent-002",
+    "name": "Bob Martinez",
+    "skills": [
+      "technical",
+      "networking"
+    ],
+    "status": "offline",
+    "activeCalls": 0,
+    "maxCapacity": 2,
+    "createdAt": "2024-01-15T08:00:00.000Z"
+  },
+  {
+    "id": "agent-003",
+    "name": "Carol Singh",
+    "skills": [
+      "billing",
+      "technical",
+      "general"
+    ],
+    "status": "available",
+    "activeCalls": 2,
+    "maxCapacity": 4,
+    "createdAt": "2024-01-15T08:00:00.000Z"
+  },
+  {
+    "id": "agent-004",
+    "name": "David Chen",
+    "skills": [
+      "sales",
+      "general"
+    ],
+    "status": "available",
+    "activeCalls": 1,
+    "maxCapacity": 3,
+    "createdAt": "2024-01-15T08:00:00.000Z"
+  },
+  {
+    "id": "agent-005",
+    "name": "Eva Patel",
+    "skills": [
+      "technical",
+      "billing"
+    ],
+    "status": "offline",
+    "activeCalls": 0,
+    "maxCapacity": 3,
+    "createdAt": "2024-01-15T08:00:00.000Z"
+  }
+]

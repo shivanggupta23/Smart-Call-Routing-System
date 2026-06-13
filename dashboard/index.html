@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Call Routing — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">⬡</span>
+      <span class="brand-name">CallRoute</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="overview">
+        <span class="nav-icon">◈</span> Overview
+      </a>
+      <a href="#" class="nav-item" data-section="agents">
+        <span class="nav-icon">◉</span> Agents
+      </a>
+      <a href="#" class="nav-item" data-section="calls">
+        <span class="nav-icon">◎</span> Calls
+      </a>
+      <a href="#" class="nav-item" data-section="queue">
+        <span class="nav-icon">◌</span> Queue
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="status-dot online"></div>
+      <span>System Online</span>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="page-title">Overview</h1>
+        <span class="page-subtitle" id="page-subtitle">Real-time routing dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <span class="last-updated" id="last-updated">—</span>
+        <button class="btn btn-ghost" onclick="refreshAll()">↺ Refresh</button>
+        <button class="btn btn-primary" onclick="openModal('newCallModal')">+ New Call</button>
+      </div>
+    </header>
+
+    <!-- ══════════════ OVERVIEW SECTION ══════════════ -->
+    <section id="section-overview" class="section active">
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Active Calls</div>
+          <div class="kpi-value" id="kpi-active">—</div>
+          <div class="kpi-sub" id="kpi-active-sub">loading…</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Available Agents</div>
+          <div class="kpi-value" id="kpi-available">—</div>
+          <div class="kpi-sub" id="kpi-available-sub">loading…</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Queued Calls</div>
+          <div class="kpi-value" id="kpi-queued">—</div>
+          <div class="kpi-sub" id="kpi-queued-sub">loading…</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Calls Handled</div>
+          <div class="kpi-value" id="kpi-handled">—</div>
+          <div class="kpi-sub">total ended</div>
+        </div>
+      </div>
+
+      <!-- Two-column layout -->
+      <div class="grid-2">
+        <!-- Active calls table -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Active Calls</span>
+            <span class="badge badge-blue" id="badge-active-count">0</span>
+          </div>
+          <div class="table-wrap">
+            <table class="table" id="active-calls-table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Skill</th>
+                  <th>Priority</th>
+                  <th>Agent</th>
+                  <th>Duration</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="active-calls-body">
+                <tr><td colspan="6" class="empty-row">No active calls</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Agent status panel -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Agent Status</span>
+            <span class="badge badge-green" id="badge-agent-count">0</span>
+          </div>
+          <div id="agent-status-list" class="agent-list">
+            <div class="empty-row">Loading agents…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Queue panels -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Waiting Queue</span>
+            <span class="badge badge-amber" id="badge-waiting-count">0</span>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr><th>Customer</th><th>Skill</th><th>Priority</th><th>Waiting</th></tr>
+              </thead>
+              <tbody id="waiting-queue-body">
+                <tr><td colspan="4" class="empty-row">Queue is empty</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Fallback Queue</span>
+            <span class="badge badge-red" id="badge-fallback-count">0</span>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr><th>Customer</th><th>Required Skill</th><th>Priority</th><th>Queued</th></tr>
+              </thead>
+              <tbody id="fallback-queue-body">
+                <tr><td colspan="4" class="empty-row">No fallback calls</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ AGENTS SECTION ══════════════ -->
+    <section id="section-agents" class="section">
+      <div class="section-toolbar">
+        <button class="btn btn-primary" onclick="openModal('newAgentModal')">+ Add Agent</button>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">All Agents</span>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="agents-full-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Name</th><th>Skills</th><th>Status</th>
+                <th>Active / Max</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="agents-full-body">
+              <tr><td colspan="6" class="empty-row">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ CALLS SECTION ══════════════ -->
+    <section id="section-calls" class="section">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Call History</span>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>Call ID</th><th>Customer</th><th>Skill</th><th>Priority</th><th>Agent</th><th>Duration</th><th>Ended</th></tr>
+            </thead>
+            <tbody id="history-body">
+              <tr><td colspan="7" class="empty-row">No history yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ QUEUE SECTION ══════════════ -->
+    <section id="section-queue" class="section">
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="kpi-card">
+          <div class="kpi-label">Waiting</div>
+          <div class="kpi-value" id="q-waiting">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Fallback</div>
+          <div class="kpi-value" id="q-fallback">—</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Full Queue</span>
+          <button class="btn btn-ghost btn-sm" onclick="processQueue()">⟳ Process Queue</button>
+        </div>
+        <div id="queue-detail">Loading…</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══════════════ MODALS ══════════════ -->
+
+  <!-- New Call Modal -->
+  <div class="modal-overlay" id="newCallModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Incoming Call</h2>
+        <button class="modal-close" onclick="closeModal('newCallModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Customer Name</label>
+          <input type="text" id="call-customer" placeholder="e.g. John Doe" />
+        </div>
+        <div class="form-group">
+          <label>Required Skill</label>
+          <select id="call-skill">
+            <option value="billing">Billing</option>
+            <option value="technical">Technical Support</option>
+            <option value="sales">Sales</option>
+            <option value="general">General</option>
+            <option value="networking">Networking</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Priority</label>
+          <select id="call-priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+            <option value="urgent">Urgent</option>
+          </select>
+        </div>
+        <div id="call-result" class="result-box" style="display:none;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('newCallModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="submitCall()">Route Call</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Agent Modal -->
+  <div class="modal-overlay" id="newAgentModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Add Agent</h2>
+        <button class="modal-close" onclick="closeModal('newAgentModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Agent Name</label>
+          <input type="text" id="agent-name" placeholder="e.g. Jane Smith" />
+        </div>
+        <div class="form-group">
+          <label>Skills (select multiple)</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="agent-skill" value="billing" /> Billing</label>
+            <label><input type="checkbox" name="agent-skill" value="technical" /> Technical</label>
+            <label><input type="checkbox" name="agent-skill" value="sales" /> Sales</label>
+            <label><input type="checkbox" name="agent-skill" value="general" checked /> General</label>
+            <label><input type="checkbox" name="agent-skill" value="networking" /> Networking</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Max Capacity</label>
+          <input type="number" id="agent-capacity" value="3" min="1" max="10" />
+        </div>
+        <div id="agent-result" class="result-box" style="display:none;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('newAgentModal')">Cancel</button>
+        <button class="btn btn-primary" onclick="submitAgent()">Add Agent</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

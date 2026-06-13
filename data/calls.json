@@ -1,0 +1,62 @@
+[
+  {
+    "id": "call-0e110308",
+    "customerName": "John Doe",
+    "requiredSkill": "billing",
+    "priority": "high",
+    "status": "active",
+    "assignedAgent": "agent-003",
+    "startTime": "2026-06-13T09:53:27.836Z",
+    "endTime": null,
+    "waitTime": null,
+    "createdAt": "2026-06-13T09:53:27.835Z"
+  },
+  {
+    "id": "call-0a531251",
+    "customerName": "Customer 2",
+    "requiredSkill": "billing",
+    "priority": "medium",
+    "status": "active",
+    "assignedAgent": "agent-001",
+    "startTime": "2026-06-13T09:57:02.771Z",
+    "endTime": null,
+    "waitTime": null,
+    "createdAt": "2026-06-13T09:57:02.770Z"
+  },
+  {
+    "id": "call-b6a65775",
+    "customerName": "Customer 3",
+    "requiredSkill": "billing",
+    "priority": "medium",
+    "status": "active",
+    "assignedAgent": "agent-003",
+    "startTime": "2026-06-13T09:57:13.877Z",
+    "endTime": null,
+    "waitTime": null,
+    "createdAt": "2026-06-13T09:57:13.876Z"
+  },
+  {
+    "id": "call-cd032c6e",
+    "customerName": "Customer 4",
+    "requiredSkill": "billing",
+    "priority": "medium",
+    "status": "active",
+    "assignedAgent": "agent-001",
+    "startTime": "2026-06-13T09:57:26.440Z",
+    "endTime": null,
+    "waitTime": null,
+    "createdAt": "2026-06-13T09:57:26.440Z"
+  },
+  {
+    "id": "call-df1f529c",
+    "customerName": "Raj",
+    "requiredSkill": "sales",
+    "priority": "low",
+    "status": "active",
+    "assignedAgent": "agent-004",
+    "startTime": "2026-06-13T09:58:37.579Z",
+    "endTime": null,
+    "waitTime": null,
+    "createdAt": "2026-06-13T09:58:37.579Z"
+  }
+]

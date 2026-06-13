@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  smart-call-routing:
+    build:
+      context: .
+      target: production
+    container_name: smart-call-routing-system
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATA_DIR=./data
+    volumes:
+      - call-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  call-data:

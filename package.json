@@ -1,0 +1,27 @@
+{
+  "name": "smart-call-routing-system",
+  "version": "1.0.0",
+  "description": "A production-style Smart Call Routing System simulating real customer support call center routing",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "lint": "eslint src/"
+  },
+  "keywords": ["call-routing", "load-balancing", "skill-based-routing", "queue-management"],
+  "author": "Smart Call Routing System",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
