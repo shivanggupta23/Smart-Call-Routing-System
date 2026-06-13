@@ -329,6 +329,13 @@ Built as a portfolio project demonstrating backend systems design, REST API arch
 
 ---
 
+## 🚀 Quick Access
+
+| Resource | Link |
+|-----------|------|
+| Live Demo | https://smart-call-routing-system.onrender.com/ |
+| GitHub Repository | https://github.com/shivanggupta23/smart-call-routing-system |
+
 <div align="center">
   <sub>MIT License</sub>
 </div>
